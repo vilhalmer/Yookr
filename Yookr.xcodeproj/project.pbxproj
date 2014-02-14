@@ -1,0 +1,552 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3822F84E18AC7A4600489958 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3822F84D18AC7A4600489958 /* Foundation.framework */; };
+		3822F85018AC7A4600489958 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3822F84F18AC7A4600489958 /* CoreGraphics.framework */; };
+		3822F85218AC7A4600489958 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3822F85118AC7A4600489958 /* UIKit.framework */; };
+		3822F85418AC7A4600489958 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3822F85318AC7A4600489958 /* SpriteKit.framework */; };
+		3822F85A18AC7A4600489958 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3822F85818AC7A4600489958 /* InfoPlist.strings */; };
+		3822F85C18AC7A4600489958 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3822F85B18AC7A4600489958 /* main.m */; };
+		3822F86018AC7A4600489958 /* YKRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3822F85F18AC7A4600489958 /* YKRAppDelegate.m */; };
+		3822F86318AC7A4600489958 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3822F86118AC7A4600489958 /* Main.storyboard */; };
+		3822F86618AC7A4600489958 /* YKRGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3822F86518AC7A4600489958 /* YKRGameViewController.m */; };
+		3822F86918AC7A4600489958 /* YKRMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3822F86818AC7A4600489958 /* YKRMyScene.m */; };
+		3822F86B18AC7A4600489958 /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 3822F86A18AC7A4600489958 /* Spaceship.png */; };
+		3822F86D18AC7A4600489958 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3822F86C18AC7A4600489958 /* Images.xcassets */; };
+		3822F87418AC7A4600489958 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3822F87318AC7A4600489958 /* XCTest.framework */; };
+		3822F87518AC7A4600489958 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3822F84D18AC7A4600489958 /* Foundation.framework */; };
+		3822F87618AC7A4600489958 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3822F85118AC7A4600489958 /* UIKit.framework */; };
+		3822F87E18AC7A4600489958 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3822F87C18AC7A4600489958 /* InfoPlist.strings */; };
+		3822F88018AC7A4600489958 /* YookrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3822F87F18AC7A4600489958 /* YookrTests.m */; };
+		3822F88B18AC87F200489958 /* YKRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3822F88A18AC87F200489958 /* YKRNavigationController.m */; };
+		3822F88E18AD1D4800489958 /* YKRSessionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3822F88D18AD1D4800489958 /* YKRSessionTableViewController.m */; };
+		38396A0518AEB15A008A886E /* YKRNetworkGameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38396A0418AEB15A008A886E /* YKRNetworkGameTableViewController.m */; };
+		38DB4DB518AEDDAB009BAD76 /* YKRPortraitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DB4DB418AEDDAB009BAD76 /* YKRPortraitTableViewController.m */; };
+		38DB4DB918AEDEF4009BAD76 /* YKRSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DB4DB818AEDEF4009BAD76 /* YKRSettingsTableViewController.m */; };
+		38F4777918AE6C6800187DF0 /* YKRNewGameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F4777818AE6C6800187DF0 /* YKRNewGameTableViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3822F87718AC7A4600489958 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3822F84218AC7A4600489958 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3822F84918AC7A4600489958;
+			remoteInfo = Yookr;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3822F84A18AC7A4600489958 /* Yookr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yookr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3822F84D18AC7A4600489958 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3822F84F18AC7A4600489958 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3822F85118AC7A4600489958 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3822F85318AC7A4600489958 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		3822F85718AC7A4600489958 /* Yookr-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Yookr-Info.plist"; sourceTree = "<group>"; };
+		3822F85918AC7A4600489958 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3822F85B18AC7A4600489958 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3822F85D18AC7A4600489958 /* Yookr-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yookr-Prefix.pch"; sourceTree = "<group>"; };
+		3822F85E18AC7A4600489958 /* YKRAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YKRAppDelegate.h; sourceTree = "<group>"; };
+		3822F85F18AC7A4600489958 /* YKRAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YKRAppDelegate.m; sourceTree = "<group>"; };
+		3822F86218AC7A4600489958 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3822F86418AC7A4600489958 /* YKRGameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YKRGameViewController.h; sourceTree = "<group>"; };
+		3822F86518AC7A4600489958 /* YKRGameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YKRGameViewController.m; sourceTree = "<group>"; };
+		3822F86718AC7A4600489958 /* YKRMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YKRMyScene.h; sourceTree = "<group>"; };
+		3822F86818AC7A4600489958 /* YKRMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YKRMyScene.m; sourceTree = "<group>"; };
+		3822F86A18AC7A4600489958 /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
+		3822F86C18AC7A4600489958 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3822F87218AC7A4600489958 /* YookrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YookrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3822F87318AC7A4600489958 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		3822F87B18AC7A4600489958 /* YookrTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "YookrTests-Info.plist"; sourceTree = "<group>"; };
+		3822F87D18AC7A4600489958 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3822F87F18AC7A4600489958 /* YookrTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YookrTests.m; sourceTree = "<group>"; };
+		3822F88918AC87F200489958 /* YKRNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRNavigationController.h; sourceTree = "<group>"; };
+		3822F88A18AC87F200489958 /* YKRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRNavigationController.m; sourceTree = "<group>"; };
+		3822F88C18AD1D4800489958 /* YKRSessionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRSessionTableViewController.h; sourceTree = "<group>"; };
+		3822F88D18AD1D4800489958 /* YKRSessionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRSessionTableViewController.m; sourceTree = "<group>"; };
+		38396A0318AEB15A008A886E /* YKRNetworkGameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRNetworkGameTableViewController.h; sourceTree = "<group>"; };
+		38396A0418AEB15A008A886E /* YKRNetworkGameTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRNetworkGameTableViewController.m; sourceTree = "<group>"; };
+		38DB4DB318AEDDAB009BAD76 /* YKRPortraitTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRPortraitTableViewController.h; sourceTree = "<group>"; };
+		38DB4DB418AEDDAB009BAD76 /* YKRPortraitTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRPortraitTableViewController.m; sourceTree = "<group>"; };
+		38DB4DB718AEDEF4009BAD76 /* YKRSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRSettingsTableViewController.h; sourceTree = "<group>"; };
+		38DB4DB818AEDEF4009BAD76 /* YKRSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRSettingsTableViewController.m; sourceTree = "<group>"; };
+		38F4777718AE6C6800187DF0 /* YKRNewGameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRNewGameTableViewController.h; sourceTree = "<group>"; };
+		38F4777818AE6C6800187DF0 /* YKRNewGameTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRNewGameTableViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3822F84718AC7A4600489958 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3822F85018AC7A4600489958 /* CoreGraphics.framework in Frameworks */,
+				3822F85218AC7A4600489958 /* UIKit.framework in Frameworks */,
+				3822F85418AC7A4600489958 /* SpriteKit.framework in Frameworks */,
+				3822F84E18AC7A4600489958 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3822F86F18AC7A4600489958 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3822F87418AC7A4600489958 /* XCTest.framework in Frameworks */,
+				3822F87618AC7A4600489958 /* UIKit.framework in Frameworks */,
+				3822F87518AC7A4600489958 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3822F84118AC7A4600489958 = {
+			isa = PBXGroup;
+			children = (
+				3822F85518AC7A4600489958 /* src */,
+				3899A7A518AEC3C6000DFF0D /* res */,
+				3822F87918AC7A4600489958 /* tests */,
+				3822F84C18AC7A4600489958 /* Frameworks */,
+				3822F84B18AC7A4600489958 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3822F84B18AC7A4600489958 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3822F84A18AC7A4600489958 /* Yookr.app */,
+				3822F87218AC7A4600489958 /* YookrTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3822F84C18AC7A4600489958 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3822F84D18AC7A4600489958 /* Foundation.framework */,
+				3822F84F18AC7A4600489958 /* CoreGraphics.framework */,
+				3822F85118AC7A4600489958 /* UIKit.framework */,
+				3822F85318AC7A4600489958 /* SpriteKit.framework */,
+				3822F87318AC7A4600489958 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3822F85518AC7A4600489958 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3822F85E18AC7A4600489958 /* YKRAppDelegate.h */,
+				3822F85F18AC7A4600489958 /* YKRAppDelegate.m */,
+				38DB4DB318AEDDAB009BAD76 /* YKRPortraitTableViewController.h */,
+				38DB4DB418AEDDAB009BAD76 /* YKRPortraitTableViewController.m */,
+				3899A7A418AEC3B1000DFF0D /* sessions */,
+				3899A7A318AEC395000DFF0D /* game */,
+				38DB4DB618AEDE28009BAD76 /* settings */,
+				3822F85B18AC7A4600489958 /* main.m */,
+				3822F85D18AC7A4600489958 /* Yookr-Prefix.pch */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		3822F87918AC7A4600489958 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				3822F87F18AC7A4600489958 /* YookrTests.m */,
+				3822F87A18AC7A4600489958 /* Supporting Files */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		3822F87A18AC7A4600489958 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3822F87B18AC7A4600489958 /* YookrTests-Info.plist */,
+				3822F87C18AC7A4600489958 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3899A7A318AEC395000DFF0D /* game */ = {
+			isa = PBXGroup;
+			children = (
+				3822F86418AC7A4600489958 /* YKRGameViewController.h */,
+				3822F86518AC7A4600489958 /* YKRGameViewController.m */,
+				3822F86718AC7A4600489958 /* YKRMyScene.h */,
+				3822F86818AC7A4600489958 /* YKRMyScene.m */,
+			);
+			path = game;
+			sourceTree = "<group>";
+		};
+		3899A7A418AEC3B1000DFF0D /* sessions */ = {
+			isa = PBXGroup;
+			children = (
+				3822F88C18AD1D4800489958 /* YKRSessionTableViewController.h */,
+				3822F88D18AD1D4800489958 /* YKRSessionTableViewController.m */,
+				38F4777718AE6C6800187DF0 /* YKRNewGameTableViewController.h */,
+				38F4777818AE6C6800187DF0 /* YKRNewGameTableViewController.m */,
+				38396A0318AEB15A008A886E /* YKRNetworkGameTableViewController.h */,
+				38396A0418AEB15A008A886E /* YKRNetworkGameTableViewController.m */,
+				3822F88918AC87F200489958 /* YKRNavigationController.h */,
+				3822F88A18AC87F200489958 /* YKRNavigationController.m */,
+			);
+			path = sessions;
+			sourceTree = "<group>";
+		};
+		3899A7A518AEC3C6000DFF0D /* res */ = {
+			isa = PBXGroup;
+			children = (
+				3822F85718AC7A4600489958 /* Yookr-Info.plist */,
+				3822F85818AC7A4600489958 /* InfoPlist.strings */,
+				3822F86118AC7A4600489958 /* Main.storyboard */,
+				3822F86A18AC7A4600489958 /* Spaceship.png */,
+				3822F86C18AC7A4600489958 /* Images.xcassets */,
+			);
+			path = res;
+			sourceTree = "<group>";
+		};
+		38DB4DB618AEDE28009BAD76 /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				38DB4DB718AEDEF4009BAD76 /* YKRSettingsTableViewController.h */,
+				38DB4DB818AEDEF4009BAD76 /* YKRSettingsTableViewController.m */,
+			);
+			path = settings;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3822F84918AC7A4600489958 /* Yookr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3822F88318AC7A4600489958 /* Build configuration list for PBXNativeTarget "Yookr" */;
+			buildPhases = (
+				3822F84618AC7A4600489958 /* Sources */,
+				3822F84718AC7A4600489958 /* Frameworks */,
+				3822F84818AC7A4600489958 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Yookr;
+			productName = Yookr;
+			productReference = 3822F84A18AC7A4600489958 /* Yookr.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3822F87118AC7A4600489958 /* YookrTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3822F88618AC7A4600489958 /* Build configuration list for PBXNativeTarget "YookrTests" */;
+			buildPhases = (
+				3822F86E18AC7A4600489958 /* Sources */,
+				3822F86F18AC7A4600489958 /* Frameworks */,
+				3822F87018AC7A4600489958 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3822F87818AC7A4600489958 /* PBXTargetDependency */,
+			);
+			name = YookrTests;
+			productName = YookrTests;
+			productReference = 3822F87218AC7A4600489958 /* YookrTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3822F84218AC7A4600489958 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = YKR;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Unsquared Labs";
+				TargetAttributes = {
+					3822F87118AC7A4600489958 = {
+						TestTargetID = 3822F84918AC7A4600489958;
+					};
+				};
+			};
+			buildConfigurationList = 3822F84518AC7A4600489958 /* Build configuration list for PBXProject "Yookr" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3822F84118AC7A4600489958;
+			productRefGroup = 3822F84B18AC7A4600489958 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3822F84918AC7A4600489958 /* Yookr */,
+				3822F87118AC7A4600489958 /* YookrTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3822F84818AC7A4600489958 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3822F85A18AC7A4600489958 /* InfoPlist.strings in Resources */,
+				3822F86D18AC7A4600489958 /* Images.xcassets in Resources */,
+				3822F86B18AC7A4600489958 /* Spaceship.png in Resources */,
+				3822F86318AC7A4600489958 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3822F87018AC7A4600489958 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3822F87E18AC7A4600489958 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3822F84618AC7A4600489958 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3822F88E18AD1D4800489958 /* YKRSessionTableViewController.m in Sources */,
+				38F4777918AE6C6800187DF0 /* YKRNewGameTableViewController.m in Sources */,
+				3822F85C18AC7A4600489958 /* main.m in Sources */,
+				38DB4DB518AEDDAB009BAD76 /* YKRPortraitTableViewController.m in Sources */,
+				3822F86918AC7A4600489958 /* YKRMyScene.m in Sources */,
+				3822F86018AC7A4600489958 /* YKRAppDelegate.m in Sources */,
+				38DB4DB918AEDEF4009BAD76 /* YKRSettingsTableViewController.m in Sources */,
+				3822F86618AC7A4600489958 /* YKRGameViewController.m in Sources */,
+				3822F88B18AC87F200489958 /* YKRNavigationController.m in Sources */,
+				38396A0518AEB15A008A886E /* YKRNetworkGameTableViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3822F86E18AC7A4600489958 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3822F88018AC7A4600489958 /* YookrTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3822F87818AC7A4600489958 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3822F84918AC7A4600489958 /* Yookr */;
+			targetProxy = 3822F87718AC7A4600489958 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3822F85818AC7A4600489958 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3822F85918AC7A4600489958 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3822F86118AC7A4600489958 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3822F86218AC7A4600489958 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3822F87C18AC7A4600489958 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3822F87D18AC7A4600489958 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3822F88118AC7A4600489958 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3822F88218AC7A4600489958 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3822F88418AC7A4600489958 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "src/Yookr-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/res/Yookr-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3822F88518AC7A4600489958 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "src/Yookr-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/res/Yookr-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		3822F88718AC7A4600489958 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Yookr.app/Yookr";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Yookr/Yookr-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "YookrTests/YookrTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		3822F88818AC7A4600489958 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Yookr.app/Yookr";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Yookr/Yookr-Prefix.pch";
+				INFOPLIST_FILE = "YookrTests/YookrTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3822F84518AC7A4600489958 /* Build configuration list for PBXProject "Yookr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3822F88118AC7A4600489958 /* Debug */,
+				3822F88218AC7A4600489958 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3822F88318AC7A4600489958 /* Build configuration list for PBXNativeTarget "Yookr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3822F88418AC7A4600489958 /* Debug */,
+				3822F88518AC7A4600489958 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3822F88618AC7A4600489958 /* Build configuration list for PBXNativeTarget "YookrTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3822F88718AC7A4600489958 /* Debug */,
+				3822F88818AC7A4600489958 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3822F84218AC7A4600489958 /* Project object */;
+}
