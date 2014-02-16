@@ -22,7 +22,7 @@
     }
 }
 
-- (IBAction)unwindFrom:(UIStoryboardSegue *)segue
+- (IBAction)unwindToSessionTableViewControllerFrom:(UIStoryboardSegue *)segue
 {
     NSLog(@"hi");
 }

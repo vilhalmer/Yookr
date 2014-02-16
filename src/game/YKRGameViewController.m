@@ -7,9 +7,12 @@
 //
 
 #import "YKRGameViewController.h"
-#import "YKRMyScene.h"
+#import "YKRMainMenuScene.h"
 
 @implementation YKRGameViewController
+{
+    BOOL gameInProgress;
+}
 
 - (void)viewDidLoad
 {
@@ -20,20 +23,23 @@
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
     
+    //[skView setBackgroundColor:];
+    
     // Create and configure the scene.
-    SKScene * scene = [YKRMyScene sceneWithSize:skView.bounds.size];
+    YKRMainMenuScene * scene = [YKRMainMenuScene sceneWithSize:skView.bounds.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;
+    [scene setViewController:self];
     
     // Present the scene.
     [skView presentScene:scene];
 }
 
 - (void)viewDidAppear:(BOOL)animated
-{    
+{/*
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [self performSegueWithIdentifier:@"segueToSettingsTableViewController" sender:nil];
-    });
+        [self performSegueWithIdentifier:@"segueToSessionTableViewController" sender:nil];
+    });*/
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -48,7 +54,7 @@
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskLandscape;
+    return [(YKRScene *)[(SKView *)[self view] scene] sceneOrientation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,9 +63,9 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (IBAction)unwindFrom:(UIStoryboardSegue *)segue
+- (IBAction)unwindToGameViewControllerFrom:(UIStoryboardSegue *)segue
 {
-    NSLog(@"game should be starting now lol");
+    if ([segue sourceViewController]) {}
 }
 
 @end

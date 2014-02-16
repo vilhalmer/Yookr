@@ -13,23 +13,20 @@
                         <viewControllerLayoutGuide type="bottom" id="QeC-42-Rmy"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bdc-N1-crn" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="44a-DD-lZ3"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <segue destination="n1y-mN-w0G" kind="modal" identifier="segueToSessionTableViewController" modalTransitionStyle="coverVertical" id="oSg-Wh-acF"/>
                         <segue destination="7Nb-XB-idX" kind="modal" identifier="segueToSettingsTableViewController" modalTransitionStyle="flipHorizontal" id="mzH-Ay-bJb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="btX-cZ-eVz" sceneMemberID="firstResponder"/>
-                <exit id="L2C-Vi-YZd" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-690" y="526"/>
+            <point key="canvasLocation" x="-508" y="402"/>
         </scene>
         <!--Session Table View Controller - Select Game-->
         <scene sceneID="IHm-ja-OVf">
@@ -90,10 +87,16 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Select Game" id="fuW-sk-uN0">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="0wW-DO-reB">
+                            <connections>
+                                <segue destination="BJo-W5-MzH" kind="unwind" unwindAction="unwindToGameViewControllerFrom:" id="0rR-55-WSS"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="318-L8-UII"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U6h-uZ-0w8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="BJo-W5-MzH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="883" y="402"/>
         </scene>
@@ -203,7 +206,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="VY9-nT-Jso" kind="modal" id="cYO-oU-cLD"/>
+                                            <segue destination="k6j-Yt-h24" kind="modal" id="Wln-lx-yab"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -223,6 +226,53 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S71-Ba-jmb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1455" y="776"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="T4N-cC-6hB">
+            <objects>
+                <tableViewController id="Ksy-gN-4tr" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="O1F-YP-Jwt">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="mST-aT-Nip">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mST-aT-Nip" id="Tv3-5W-XJV">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="zzU-wJ-oIG">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="pjv-va-zFf">
+                            <connections>
+                                <segue destination="E28-og-TiQ" kind="unwind" unwindAction="unwindToSessionTableViewControllerFrom:" id="7vR-XU-PE5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xO9-BJ-C2f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="E28-og-TiQ" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2562" y="402"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="3Zs-ls-kca">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="k6j-Yt-h24" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pxa-ar-XS0">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Ksy-gN-4tr" kind="relationship" relationship="rootViewController" id="13B-qO-y6V"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qbb-60-Xsg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2028" y="402"/>
         </scene>
         <!--Network Game Table View Controller-->
         <scene sceneID="2Jn-pc-IuG">
@@ -274,7 +324,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="VY9-nT-Jso" kind="modal" id="UMO-Ie-0A3"/>
+                                    <segue destination="k6j-Yt-h24" kind="modal" id="yhc-o0-dfJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -289,34 +339,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7nk-At-Wrb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1455" y="18"/>
-        </scene>
-        <!--Table View Controller-->
-        <scene sceneID="zTx-MV-NaQ">
-            <objects>
-                <tableViewController id="VY9-nT-Jso" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="r4q-dz-uR9">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="lJp-pz-2ed">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lJp-pz-2ed" id="oky-4t-qMO">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="VY9-nT-Jso" id="sQi-gc-pgR"/>
-                            <outlet property="delegate" destination="VY9-nT-Jso" id="BcR-mh-CPr"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HLZ-XE-BgT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2027" y="402"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sZk-FD-ld4">
@@ -337,10 +359,10 @@
             </objects>
             <point key="canvasLocation" x="343" y="402"/>
         </scene>
-        <!--Table View Controller - Settings-->
+        <!--Settings Table View Controller - Settings-->
         <scene sceneID="qEz-fZ-zKT">
             <objects>
-                <tableViewController id="ccz-zt-1ga" sceneMemberID="viewController">
+                <tableViewController id="ccz-zt-1ga" customClass="YKRSettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="U6V-Ok-h1D">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -359,12 +381,13 @@
                     <navigationItem key="navigationItem" title="Settings" id="uF3-OA-5Xs">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="5YI-WR-f2o">
                             <connections>
-                                <segue destination="L2C-Vi-YZd" kind="unwind" unwindAction="unwindFrom:" id="4pz-N3-GDg"/>
+                                <segue destination="Quh-s0-cd0" kind="unwind" unwindAction="unwindToGameViewControllerFrom:" id="slX-kV-cwS"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zz5-wy-Q0G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Quh-s0-cd0" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="610" y="1196"/>
         </scene>
@@ -391,6 +414,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="cYO-oU-cLD"/>
+        <segue reference="Wln-lx-yab"/>
     </inferredMetricsTieBreakers>
 </document>

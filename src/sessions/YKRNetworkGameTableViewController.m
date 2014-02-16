@@ -43,8 +43,26 @@
                                           reuseIdentifier:@"networkGamePlayerTableViewCell"];
         }
         
-        [[cell textLabel] setText:@"Player 1"];
-        [[cell detailTextLabel] setText:@"Rose Lalonde"];
+        NSString * playerName;
+        switch ([indexPath row]) {
+            case 0:
+                playerName = @"Rose Lalonde";
+                break;
+            case 1:
+                playerName = @"Dave Strider";
+                break;
+            case 2:
+                playerName = @"Jade Harley";
+                break;
+            case 3:
+                playerName = @"John Egbert";
+                break;
+            default:
+                playerName = @"Karkat Vantas"; // WHY THE FUCK AM I THE DEFAULT
+                break;
+        }
+        [[cell textLabel] setText:[NSString stringWithFormat:@"Player %ld", [indexPath row] + 1]];
+        [[cell detailTextLabel] setText:playerName];
     }
     else if ([indexPath section] == 1) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"joinGameTableViewCell"];
