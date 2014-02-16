@@ -9,5 +9,18 @@
 #import "YKRSessionManager.h"
 
 @implementation YKRSessionManager
+{
+    NSMutableArray * availableSessions;
+}
+
+- (void)scanForSessions
+{
+    
+}
+
+- (NSArray *)availableSessions
+{
+    return [availableSessions copy];
+}
 
 @end

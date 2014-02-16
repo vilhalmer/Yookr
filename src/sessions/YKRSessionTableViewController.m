@@ -34,6 +34,13 @@
     UITableViewCell * cell;
     
     if ([indexPath section] == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"newGameTableViewCell"];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                          reuseIdentifier:@"newGameTableViewCell"];
+        }
+    }
+    else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"networkGameTableViewCell"];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1
@@ -42,13 +49,6 @@
         
         [[cell textLabel] setText:@"TEST YO"];
         [[cell detailTextLabel] setText:@"0/4 players"];
-    }
-    else {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"newGameTableViewCell"];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:@"newGameTableViewCell"];
-        }
     }
     
     return cell;
@@ -61,7 +61,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == 0) {
+    if (section == 1) {
         return @"Available Games";
     }
     else {
@@ -71,7 +71,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
+    if (section == 1) {
         return 3;
     }
     else {
