@@ -22,4 +22,8 @@
 
 - (id)initWithService:(NSNetService *)aService;
 
+- (BOOL)isEqual:(id)anObject;
+- (BOOL)isEqualToService:(NSNetService *)aService;
+- (NSUInteger)hash;
+
 @end

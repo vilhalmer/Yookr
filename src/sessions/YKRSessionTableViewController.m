@@ -44,6 +44,11 @@
     [[self tableView] reloadData];
 }
 
+- (void)sessionRemoved:(id)sender
+{
+    [[self tableView] reloadData];
+}
+
 #pragma mark - UITableViewDataSource methods
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -102,11 +107,13 @@
 - (void)awakeFromNib
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newSessionAvailable:) name:@"YKRSessionManager_newSession" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionRemoved:) name:@"YKRSessionManager_removeSession" object:nil];
 }
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"YKRSessionManager_newSession" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"YKRSessionManager_removeSession" object:nil];
 }
 
 @end

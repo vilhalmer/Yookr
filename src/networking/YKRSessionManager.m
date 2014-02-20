@@ -47,7 +47,6 @@
            didFindService:(NSNetService *)netService
                moreComing:(BOOL)moreServicesComing
 {
-    NSLog(@"found a thing woo");
     [resolvingSessions addObject:netService];
     [netService setDelegate:self];
     [netService resolveWithTimeout:5.0];
@@ -57,7 +56,13 @@
          didRemoveService:(NSNetService *)netService
                moreComing:(BOOL)moreServicesComing
 {
-	NSLog(@"should remobe a thing");
+	for (YKRSession * aSession in availableSessions) {
+        if ([aSession isEqualToService:netService]) {
+            [availableSessions removeObject:aSession];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"YKRSessionManager_removeSession" object:self];
+            break;
+        }
+    }
 }
 
 - (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)sender
