@@ -6,10 +6,13 @@
 //  Copyright (c) 2014 Unsquared Labs. All rights reserved.
 //
 
-#import "YKRGameViewController.h"
+#import "YKRMainViewController.h"
 #import "YKRMainMenuScene.h"
+#import "YKRSessionManager.h"
+#import "YKRSessionTableViewController.h"
 
-@implementation YKRGameViewController
+
+@implementation YKRMainViewController
 {
     BOOL gameInProgress;
 }
@@ -61,6 +64,15 @@
 {
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"segueToSessionViewTableController"]) {
+        
+    }
 }
 
 - (IBAction)unwindToGameViewControllerFrom:(UIStoryboardSegue *)segue

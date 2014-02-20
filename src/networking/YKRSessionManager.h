@@ -7,13 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "YKRSession.h"
 
-@interface YKRSessionManager : NSObject
+@interface YKRSessionManager : NSObject <NSNetServiceBrowserDelegate, NSNetServiceDelegate>
 
-- (void)scanForSessions;
-/** Re-scans the network for advertised sessions, updates -availableSessions. **/
+- (void)beginScanningForSessions;
+- (void)stopScanningForSessions;
 
 - (NSArray *)availableSessions;
 /** @return: An array of detected network sessions. May not be up-to-date, call -scanForSessions to update. **/
+
++ (id)sharedSessionManager;
 
 @end

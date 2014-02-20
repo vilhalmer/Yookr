@@ -7,11 +7,11 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "YKRGameViewController.h"
+#import "YKRMainViewController.h"
 
 @interface YKRScene : SKScene
 
-@property (readwrite, weak) YKRGameViewController * viewController;
+@property (readwrite, weak) YKRMainViewController * viewController;
 
 - (UIInterfaceOrientationMask)sceneOrientation;
 

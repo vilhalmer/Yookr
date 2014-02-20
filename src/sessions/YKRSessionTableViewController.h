@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "YKRPortraitTableViewController.h"
 
+
 @interface YKRSessionTableViewController : YKRPortraitTableViewController
 
 #pragma mark - UITableViewDataSource methods

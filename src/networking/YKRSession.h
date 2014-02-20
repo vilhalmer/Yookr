@@ -14,7 +14,12 @@
 @property (readonly) NSString * gameType;
 @property (readonly) NSString * name;
 @property (readonly) NSString * hostUser;
+@property (readonly) NSNumber * playerCount;
 
 - (NSArray *)playerNames;
+
+#pragma mark - Plumbing
+
+- (id)initWithService:(NSNetService *)aService;
 
 @end

@@ -7,12 +7,19 @@
 //
 
 #import "YKRSessionTableViewController.h"
+#import "YKRSessionManager.h"
+
 
 @implementation YKRSessionTableViewController
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    
+    [[YKRSessionManager sharedSessionManager] beginScanningForSessions];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[YKRSessionManager sharedSessionManager] stopScanningForSessions];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -24,7 +31,17 @@
 
 - (IBAction)unwindToSessionTableViewControllerFrom:(UIStoryboardSegue *)segue
 {
-    NSLog(@"hi");
+    NSLog(@"uuuunnnwiiiiiiinnd");
+}
+
+- (IBAction)rescan:(id)sender
+{
+    [self newSessionAvailable:nil];
+}
+
+- (void)newSessionAvailable:(id)sender
+{
+    [[self tableView] reloadData];
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -47,8 +64,9 @@
                                           reuseIdentifier:@"networkGameTableViewCell"];
         }
         
-        [[cell textLabel] setText:@"TEST YO"];
-        [[cell detailTextLabel] setText:@"0/4 players"];
+        YKRSession * session = [[[YKRSessionManager sharedSessionManager] availableSessions] objectAtIndex:[indexPath row]];
+        [[cell textLabel] setText:[session name]];
+        [[cell detailTextLabel] setText:[NSString stringWithFormat:@"%ld/4 players", [[session playerCount] integerValue]]];
     }
     
     return cell;
@@ -72,11 +90,23 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 1) {
-        return 3;
+        return [[[YKRSessionManager sharedSessionManager] availableSessions] count];
     }
     else {
         return 1;
     }
+}
+
+#pragma mark - Plumbing
+
+- (void)awakeFromNib
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(newSessionAvailable:) name:@"YKRSessionManager_newSession" object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"YKRSessionManager_newSession" object:nil];
 }
 
 @end
