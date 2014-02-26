@@ -15,7 +15,8 @@
 - (void)stopScanningForSessions;
 
 - (NSArray *)availableSessions;
-/** @return: An array of detected network sessions. May not be up-to-date, call -scanForSessions to update. **/
+/** @return: An array of detected network sessions. **/
+- (NSArray *)availableSessionsOfType:(NSString *)gameType;
 
 + (id)sharedSessionManager;
 

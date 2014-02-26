@@ -8,6 +8,7 @@
 
 #import "YKRSessionTableViewController.h"
 #import "YKRSessionManager.h"
+#import "YKRGameManager.h"
 
 
 @implementation YKRSessionTableViewController
@@ -79,27 +80,27 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2; // Network games, create game.
+    /// @todo: This is naïve, we should only be displaying sections with at least one game available.
+    return [[[YKRGameManager sharedManager] gameTypes] count] + 1; // Create game, and one per game type.
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section == 1) {
-        return @"Available Games";
+    if (section > 0) {
+        return [[YKRGameManager sharedManager] gameTypes][section - 1];
     }
-    else {
-        return nil;
-    }
+    
+    return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 1) {
-        return [[[YKRSessionManager sharedSessionManager] availableSessions] count];
+    if (section > 0) {
+        NSString * gameType = [[YKRGameManager sharedManager] gameTypes][section - 1];
+        return [[[YKRSessionManager sharedSessionManager] availableSessionsOfType:gameType] count];
     }
-    else {
-        return 1;
-    }
+    
+    return 1;
 }
 
 #pragma mark - Plumbing

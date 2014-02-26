@@ -23,7 +23,7 @@
     [self setBackgroundColor:[SKColor colorWithRed:0.10 green:0.56 blue:0.20 alpha:1.0]];
     
     SKLabelNode * myLabel = [SKLabelNode labelNodeWithFontNamed:@"Cochin"];
-    [myLabel setText:@"YOOKR"];
+    [myLabel setText:@"Digital Deck"];
     [myLabel setFontSize:48.0];
     [myLabel setPosition:CGPointMake(CGRectGetMidX([self frame]), CGRectGetMaxY([self frame]) - 100)];
     

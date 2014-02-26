@@ -14,11 +14,13 @@
     NSNetServiceBrowser * serviceBrowser;
     
     NSMutableArray * resolvingSessions;
+    
+    BOOL searching;
 }
 
 - (void)beginScanningForSessions
 {
-    [serviceBrowser searchForServicesOfType:@"_yookr._tcp." inDomain:@"local."];
+    [serviceBrowser searchForServicesOfType:@"_DigitalDeck._tcp." inDomain:@""];
 }
 
 - (void)stopScanningForSessions
@@ -31,22 +33,38 @@
     return [availableSessions copy];
 }
 
+- (NSArray *)availableSessionsOfType:(NSString *)gameType
+/// @todo: This is horrible and I should feel horrible.
+{
+    NSMutableArray * sessions = [NSMutableArray array];
+    for (YKRSession * aSession in availableSessions) {
+        if ([[aSession gameType] isEqualToString:gameType]) {
+            [sessions addObject:aSession];
+        }
+    }
+    
+    return sessions;
+}
+
 #pragma mark - NSNetServiceBrowserDelegate methods
 
 - (void)netServiceBrowserWillSearch:(NSNetServiceBrowser *)aNetServiceBrowser
 {
     NSLog(@"commencing to be look for thing");
+    searching = YES;
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)sender didNotSearch:(NSDictionary *)errorInfo
 {
 	NSLog(@"FUCK");
+    NSLog(@"%@", errorInfo);
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)sender
            didFindService:(NSNetService *)netService
                moreComing:(BOOL)moreServicesComing
 {
+    NSLog(@"found %@", netService);
     [resolvingSessions addObject:netService];
     [netService setDelegate:self];
     [netService resolveWithTimeout:5.0];
@@ -56,7 +74,9 @@
          didRemoveService:(NSNetService *)netService
                moreComing:(BOOL)moreServicesComing
 {
+    NSLog(@"remove");
 	for (YKRSession * aSession in availableSessions) {
+        /// @todo: This is extremely inefficient.
         if ([aSession isEqualToService:netService]) {
             [availableSessions removeObject:aSession];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"YKRSessionManager_removeSession" object:self];
@@ -68,6 +88,7 @@
 - (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)sender
 {
 	NSLog(@"search ended");
+    searching = NO;
 }
 
 - (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict
@@ -78,6 +99,7 @@
 
 - (void)netServiceDidResolveAddress:(NSNetService *)sender
 {
+    NSLog(@"resolved %@", sender);
     [resolvingSessions removeObject:sender];
     
     YKRSession * newSession = [[YKRSession alloc] initWithService:sender];

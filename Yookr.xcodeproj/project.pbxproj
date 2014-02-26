@@ -26,12 +26,19 @@
 		3822F88018AC7A4600489958 /* YookrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3822F87F18AC7A4600489958 /* YookrTests.m */; };
 		3822F88B18AC87F200489958 /* YKRNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3822F88A18AC87F200489958 /* YKRNavigationController.m */; };
 		3822F88E18AD1D4800489958 /* YKRSessionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3822F88D18AD1D4800489958 /* YKRSessionTableViewController.m */; };
+		38340A2818B6A54600154054 /* YKRGameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38340A2718B6A54600154054 /* YKRGameManager.m */; };
+		38340A2B18B6ACD800154054 /* YKRGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 38340A2A18B6ACD800154054 /* YKRGame.m */; };
+		38340A2E18B6B17000154054 /* YKREuchreGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 38340A2D18B6B17000154054 /* YKREuchreGame.m */; };
+		38340A3318B6B93E00154054 /* YKRPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 38340A3218B6B93E00154054 /* YKRPlayer.m */; };
 		38396A0518AEB15A008A886E /* YKRNetworkGameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38396A0418AEB15A008A886E /* YKRNetworkGameTableViewController.m */; };
 		38A3E81118B07A7700443093 /* YKRSceneButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A3E81018B07A7700443093 /* YKRSceneButton.m */; };
 		38A3E81418B13FA600443093 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A3E81318B13FA600443093 /* GCDAsyncSocket.m */; };
 		38C278A918B03E0800DAB7A6 /* YKRSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C278A818B03E0800DAB7A6 /* YKRSessionManager.m */; };
 		38C278AC18B0421100DAB7A6 /* YKRSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C278AB18B0421100DAB7A6 /* YKRSession.m */; };
 		38C278AF18B0738400DAB7A6 /* YKRScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C278AE18B0738400DAB7A6 /* YKRScene.m */; };
+		38D8902518BB99C400D8240B /* YKRServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D8902418BB99C400D8240B /* YKRServer.m */; };
+		38D8902818BBB0A700D8240B /* YKRRemotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D8902718BBB0A700D8240B /* YKRRemotePlayer.m */; };
+		38D8902B18BBB5B800D8240B /* YKRPacket.m in Sources */ = {isa = PBXBuildFile; fileRef = 38D8902A18BBB5B800D8240B /* YKRPacket.m */; };
 		38DB4DB518AEDDAB009BAD76 /* YKRPortraitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DB4DB418AEDDAB009BAD76 /* YKRPortraitTableViewController.m */; };
 		38DB4DB918AEDEF4009BAD76 /* YKRSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DB4DB818AEDEF4009BAD76 /* YKRSettingsTableViewController.m */; };
 		38ECCFA218AEF59800242A4C /* felt.png in Resources */ = {isa = PBXBuildFile; fileRef = 38ECCFA118AEF59800242A4C /* felt.png */; };
@@ -76,6 +83,14 @@
 		3822F88A18AC87F200489958 /* YKRNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRNavigationController.m; sourceTree = "<group>"; };
 		3822F88C18AD1D4800489958 /* YKRSessionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRSessionTableViewController.h; sourceTree = "<group>"; };
 		3822F88D18AD1D4800489958 /* YKRSessionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRSessionTableViewController.m; sourceTree = "<group>"; };
+		38340A2618B6A54600154054 /* YKRGameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRGameManager.h; sourceTree = "<group>"; };
+		38340A2718B6A54600154054 /* YKRGameManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRGameManager.m; sourceTree = "<group>"; };
+		38340A2918B6ACD800154054 /* YKRGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRGame.h; sourceTree = "<group>"; };
+		38340A2A18B6ACD800154054 /* YKRGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRGame.m; sourceTree = "<group>"; };
+		38340A2C18B6B17000154054 /* YKREuchreGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKREuchreGame.h; sourceTree = "<group>"; };
+		38340A2D18B6B17000154054 /* YKREuchreGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKREuchreGame.m; sourceTree = "<group>"; };
+		38340A3118B6B93E00154054 /* YKRPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRPlayer.h; sourceTree = "<group>"; };
+		38340A3218B6B93E00154054 /* YKRPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRPlayer.m; sourceTree = "<group>"; };
 		38396A0318AEB15A008A886E /* YKRNetworkGameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRNetworkGameTableViewController.h; sourceTree = "<group>"; };
 		38396A0418AEB15A008A886E /* YKRNetworkGameTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRNetworkGameTableViewController.m; sourceTree = "<group>"; };
 		38A3E80F18B07A7700443093 /* YKRSceneButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRSceneButton.h; sourceTree = "<group>"; };
@@ -88,6 +103,12 @@
 		38C278AB18B0421100DAB7A6 /* YKRSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRSession.m; sourceTree = "<group>"; };
 		38C278AD18B0738400DAB7A6 /* YKRScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRScene.h; sourceTree = "<group>"; };
 		38C278AE18B0738400DAB7A6 /* YKRScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRScene.m; sourceTree = "<group>"; };
+		38D8902318BB99C400D8240B /* YKRServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRServer.h; sourceTree = "<group>"; };
+		38D8902418BB99C400D8240B /* YKRServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRServer.m; sourceTree = "<group>"; };
+		38D8902618BBB0A700D8240B /* YKRRemotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRRemotePlayer.h; sourceTree = "<group>"; };
+		38D8902718BBB0A700D8240B /* YKRRemotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRRemotePlayer.m; sourceTree = "<group>"; };
+		38D8902918BBB5B800D8240B /* YKRPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRPacket.h; sourceTree = "<group>"; };
+		38D8902A18BBB5B800D8240B /* YKRPacket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRPacket.m; sourceTree = "<group>"; };
 		38DB4DB318AEDDAB009BAD76 /* YKRPortraitTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRPortraitTableViewController.h; sourceTree = "<group>"; };
 		38DB4DB418AEDDAB009BAD76 /* YKRPortraitTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YKRPortraitTableViewController.m; sourceTree = "<group>"; };
 		38DB4DB718AEDEF4009BAD76 /* YKRSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YKRSettingsTableViewController.h; sourceTree = "<group>"; };
@@ -163,9 +184,10 @@
 				3822F86518AC7A4600489958 /* YKRMainViewController.m */,
 				38DB4DB318AEDDAB009BAD76 /* YKRPortraitTableViewController.h */,
 				38DB4DB418AEDDAB009BAD76 /* YKRPortraitTableViewController.m */,
+				38340A2518B6A4F600154054 /* games */,
 				38C278A618B03DCB00DAB7A6 /* networking */,
 				3899A7A418AEC3B1000DFF0D /* sessions */,
-				3899A7A318AEC395000DFF0D /* game */,
+				3899A7A318AEC395000DFF0D /* scenes */,
 				38DB4DB618AEDE28009BAD76 /* settings */,
 				3822F85B18AC7A4600489958 /* main.m */,
 				3822F85D18AC7A4600489958 /* Yookr-Prefix.pch */,
@@ -191,7 +213,40 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		3899A7A318AEC395000DFF0D /* game */ = {
+		38340A2518B6A4F600154054 /* games */ = {
+			isa = PBXGroup;
+			children = (
+				38340A2618B6A54600154054 /* YKRGameManager.h */,
+				38340A2718B6A54600154054 /* YKRGameManager.m */,
+				38340A2F18B6B90400154054 /* types */,
+				38340A3018B6B92900154054 /* players */,
+			);
+			path = games;
+			sourceTree = "<group>";
+		};
+		38340A2F18B6B90400154054 /* types */ = {
+			isa = PBXGroup;
+			children = (
+				38340A2918B6ACD800154054 /* YKRGame.h */,
+				38340A2A18B6ACD800154054 /* YKRGame.m */,
+				38340A2C18B6B17000154054 /* YKREuchreGame.h */,
+				38340A2D18B6B17000154054 /* YKREuchreGame.m */,
+			);
+			path = types;
+			sourceTree = "<group>";
+		};
+		38340A3018B6B92900154054 /* players */ = {
+			isa = PBXGroup;
+			children = (
+				38340A3118B6B93E00154054 /* YKRPlayer.h */,
+				38340A3218B6B93E00154054 /* YKRPlayer.m */,
+				38D8902618BBB0A700D8240B /* YKRRemotePlayer.h */,
+				38D8902718BBB0A700D8240B /* YKRRemotePlayer.m */,
+			);
+			path = players;
+			sourceTree = "<group>";
+		};
+		3899A7A318AEC395000DFF0D /* scenes */ = {
 			isa = PBXGroup;
 			children = (
 				38C278AD18B0738400DAB7A6 /* YKRScene.h */,
@@ -201,7 +256,7 @@
 				3822F86718AC7A4600489958 /* YKRMainMenuScene.h */,
 				3822F86818AC7A4600489958 /* YKRMainMenuScene.m */,
 			);
-			path = game;
+			path = scenes;
 			sourceTree = "<group>";
 		};
 		3899A7A418AEC3B1000DFF0D /* sessions */ = {
@@ -241,6 +296,10 @@
 				38C278A818B03E0800DAB7A6 /* YKRSessionManager.m */,
 				38C278AA18B0421100DAB7A6 /* YKRSession.h */,
 				38C278AB18B0421100DAB7A6 /* YKRSession.m */,
+				38D8902318BB99C400D8240B /* YKRServer.h */,
+				38D8902418BB99C400D8240B /* YKRServer.m */,
+				38D8902918BBB5B800D8240B /* YKRPacket.h */,
+				38D8902A18BBB5B800D8240B /* YKRPacket.m */,
 			);
 			path = networking;
 			sourceTree = "<group>";
@@ -354,21 +413,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38D8902818BBB0A700D8240B /* YKRRemotePlayer.m in Sources */,
 				38C278A918B03E0800DAB7A6 /* YKRSessionManager.m in Sources */,
 				3822F88E18AD1D4800489958 /* YKRSessionTableViewController.m in Sources */,
 				38F4777918AE6C6800187DF0 /* YKRNewGameTableViewController.m in Sources */,
 				3822F85C18AC7A4600489958 /* main.m in Sources */,
 				38DB4DB518AEDDAB009BAD76 /* YKRPortraitTableViewController.m in Sources */,
 				38C278AC18B0421100DAB7A6 /* YKRSession.m in Sources */,
+				38340A2818B6A54600154054 /* YKRGameManager.m in Sources */,
+				38D8902B18BBB5B800D8240B /* YKRPacket.m in Sources */,
 				38A3E81418B13FA600443093 /* GCDAsyncSocket.m in Sources */,
 				3822F86918AC7A4600489958 /* YKRMainMenuScene.m in Sources */,
 				38A3E81118B07A7700443093 /* YKRSceneButton.m in Sources */,
 				3822F86018AC7A4600489958 /* YKRAppDelegate.m in Sources */,
 				38DB4DB918AEDEF4009BAD76 /* YKRSettingsTableViewController.m in Sources */,
 				3822F86618AC7A4600489958 /* YKRMainViewController.m in Sources */,
+				38340A2B18B6ACD800154054 /* YKRGame.m in Sources */,
+				38340A2E18B6B17000154054 /* YKREuchreGame.m in Sources */,
 				3822F88B18AC87F200489958 /* YKRNavigationController.m in Sources */,
 				38C278AF18B0738400DAB7A6 /* YKRScene.m in Sources */,
 				38396A0518AEB15A008A886E /* YKRNetworkGameTableViewController.m in Sources */,
+				38340A3318B6B93E00154054 /* YKRPlayer.m in Sources */,
+				38D8902518BB99C400D8240B /* YKRServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
