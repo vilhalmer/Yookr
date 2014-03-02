@@ -1,0 +1,57 @@
+            .------..------..------..------..------..------..------.
+            |D.--. ||I.--. ||G.--. ||I.--. ||T.--. ||A.--. ||L.--. |
+            | :/\: || (\/) || :/\: || (\/) || :/\: || (\/) || :/\: |
+            | (__) || :\/: || :\/: || :\/: || (__) || :\/: || (__) |
+            | '--'D|| '--'I|| '--'G|| '--'I|| '--'T|| '--'A|| '--'L|
+            `------'`---.------..------..------..------.---'`------'
+                        |D.--. ||E.--. ||C.--. ||K.--. |
+                        | :/\: || (\/) || :/\: || :/\: |
+                        | (__) || :\/: || :\/: || :\/: |
+                        | '--'D|| '--'E|| '--'C|| '--'K|
+                        `------'`------'`------'`------'
+
+          …by Bill Doyle, Jason Elston, Brad Johns, and Taylor Morris
+                         iOS version led by Bill Doyle
+
+                      Sprint One Release: Agile Artichoke
+
+                                      ***
+
+OVERVIEW
+    Digital Deck is a cross-platform, multiplayer card game. It uses
+    a client-server model, with one user initiating a game and setting the
+    rules. The app then uses ZeroConf (Bonjour) to advertise the game on the
+    LAN, where others may connect to it. Once the requisite number of players
+    have connected to the host, the game begins automatically. The host device
+    handles all of the game logic, and updates the clients with new state as the
+    game progresses.
+
+    The app supports multiple game types; at the moment development is focused
+    on Euchre and Hearts.
+
+BUILDING
+    To build and test the application, simply open Yookr.xcodeproj and select
+    Build & Run. (Yookr was the name of the iOS version before we settled on
+    a shared name, it doesn't appear anywhere in the running application.) The
+    app should then start in the iOS simulator.
+
+OPERATION
+    Functionality in this first release is quite limited. The game selection
+    menus have been implemented, and it is able to display advertised network
+    games. It is not yet capable of broadcasting a game of its own.
+
+    To begin, tap the PLAY button at the main screen. This will slide up
+    a screen with a list of all available network games, sorted by type. Euchre
+    is the only type that is added to the list at the moment, its table header
+    will be visible even if there are no games available. This will change in
+    the next version. There is also an item at the top that allows you to create
+    a new game. Tapping any of the items in the list will take you to the
+    appropriate mock screen, either a list of current players (for a network
+    game), or a list of options (for a new game). Tapping either "Join Game" or
+    "Create Game" from these screens will take you to an empty view that will
+    become the "lobby" where you wait for the game to start.
+
+    Since game creation is not yet implemented, we have provided a small extra
+    application (Imposter.app) that advertises a simulated network game, which
+    will allow you to access the "Join Game" view. Simply run it and press the
+    button. The simulated game should appear in the list within a few moments.
