@@ -8,10 +8,18 @@
 
 #import "YKRGame.h"
 
+
 @implementation YKRGame
 {
     NSMutableArray * players;
 }
+
+- (void)dataReceived:(NSDictionary *)someData fromPlayer:(YKRPlayer *)aPlayer
+{
+    
+}
+
+#pragma mark - Info
 
 + (NSString *)typeName
 {
@@ -27,6 +35,8 @@
 {
     [players removeObject:aPlayer];
 }
+
+#pragma mark - Plumbing
 
 - (id)init
 /// @throws NSException: This is an abstract class.

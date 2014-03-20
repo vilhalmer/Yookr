@@ -17,22 +17,26 @@ typedef NS_ENUM(Byte, YKRPacketType) {
     YKRPacketTypeJSON        = 0x0f
 };
 
-typedef NS_ENUM(short, YKRPacketAction) {
+typedef NS_ENUM(short, YKRPacketFlags) {
     YKRPacketFlagsNone = 0x00
 };
 
 
 @interface YKRPacket : NSObject
 
-@property (strong, nonatomic) id data;
-@property (assign, nonatomic) YKRPacketType type;
-@property (assign, nonatomic) YKRPacketAction action;
+@property (readonly) NSDictionary * dictionary;
+@property (readonly) YKRPacketType type;
+@property (readonly) YKRPacketFlags flags;
 
-- (NSData *)encode;
+- (NSData *)encodeReturningError:(NSError * __autoreleasing *)maybeError;
+
+#pragma mark - Object subscripting
+
+- (id)objectForKeyedSubscript:(id<NSCopying>)aKey;
 
 #pragma mark - Plumbing
 
-- (id)initWithData:(id)data type:(YKRPacketType)type action:(YKRPacketAction)action;
-- (id)initWithEncodedData:(NSData *)data;
+- (id)initWithDictionary:(NSDictionary *)aDictionary type:(YKRPacketType)aType andFlags:(YKRPacketFlags)someFlags;
+- (id)initWithEncodedData:(NSData *)data returningError:(NSError * __autoreleasing *)maybeError;
 
 @end

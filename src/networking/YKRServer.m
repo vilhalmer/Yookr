@@ -11,19 +11,28 @@
 #import "YKRRemotePlayer.h"
 
 
+NSUInteger tag_read = 'READ';
+NSUInteger tag_writeAcknowledge = 'ACKN';
+
+NSUInteger timeout_write = 500;
+
 @implementation YKRServer
 {
     GCDAsyncSocket * serverSocket;
     NSMutableArray * clientSockets;
     NSNetService * service;
     
+    NSData * ackData;
+    
     NSInteger retries;
     
-    YKRGame * game;
+    YKRGame * __weak game;
 }
 
 - (BOOL)startServerWithGame:(YKRGame *)aGame error:(NSError * __autoreleasing *)maybeError
 {
+    game = aGame;
+    
     // Set up the socket:
     serverSocket = [[GCDAsyncSocket alloc] initWithDelegate:self
                                               delegateQueue:dispatch_get_main_queue()];
@@ -53,7 +62,7 @@
 
 - (dispatch_queue_t)newSocketQueueForConnectionFromAddress:(NSData *)address onSocket:(GCDAsyncSocket *)sock
 {
-    return dispatch_get_main_queue();
+    return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 }
 
 - (void)socket:(GCDAsyncSocket *)aSocket didAcceptNewSocket:(GCDAsyncSocket *)newSocket
@@ -61,45 +70,63 @@
 {
     NSLog(@"Accepted New Socket from %@:%hu", [newSocket connectedHost], [newSocket connectedPort]);
     [clientSockets addObject:newSocket];
-    [newSocket readDataToLength:(17 * sizeof(Byte)) withTimeout:5.0 tag:1];
+    [newSocket readDataToLength:(17 * sizeof(Byte)) withTimeout:5.0 tag:tag_read];
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
+- (void)socket:(GCDAsyncSocket *)socket didConnectToHost:(NSString *)host port:(uint16_t)port
 {
     
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
+- (void)socket:(GCDAsyncSocket *)socket didReadData:(NSData *)data withTag:(long)tag
 {
-    YKRPacket * packet = [[YKRPacket alloc] initWithEncodedData:data];
-    if (tag == 1) { // This should be a "Hello" type packet.
+    NSError * maybeError;
+    YKRPacket * packet = [[YKRPacket alloc] initWithEncodedData:data returningError:&maybeError];
+    
+    if (maybeError) {
+        NSLog(@"Received a broken packet!");
+        NSLog(@"%@", maybeError);
+        return;
+    }
+    
+    // Go ahead and acknowledge that we've received the packet:
+    [socket writeData:ackData withTimeout:timeout_write tag:tag_writeAcknowledge];
+    
+    if ([packet type] == YKRPacketTypeHello) {
+        NSLog(@"HELLO from %@", [socket connectedHost]);
+    }
+    if ([packet type] == YKRPacketTypeJSON) {
         NSLog(@"%@", packet);
+    }
+    if ([packet type] == YKRPacketTypeGoodbye) {
+        NSLog(@"GOODBYE from %@", [socket connectedHost]);
+        [clientSockets removeObject:socket];
     }
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag
+- (void)socket:(GCDAsyncSocket *)socket didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag
 {
     
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didWriteDataWithTag:(long)tag
+- (void)socket:(GCDAsyncSocket *)socket didWriteDataWithTag:(long)tag
 {
     
 }
 
-- (void)socket:(GCDAsyncSocket *)sock didWritePartialDataOfLength:(NSUInteger)partialLength tag:(long)tag
+- (void)socket:(GCDAsyncSocket *)socket didWritePartialDataOfLength:(NSUInteger)partialLength tag:(long)tag
 {
     
 }
 
-- (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag
+- (NSTimeInterval)socket:(GCDAsyncSocket *)socket shouldTimeoutReadWithTag:(long)tag
                  elapsed:(NSTimeInterval)elapsed
                bytesDone:(NSUInteger)length
 {
     return 0;
 }
 
-- (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag
+- (NSTimeInterval)socket:(GCDAsyncSocket *)socket shouldTimeoutWriteWithTag:(long)tag
                  elapsed:(NSTimeInterval)elapsed
                bytesDone:(NSUInteger)length
 {
@@ -111,7 +138,7 @@
     
 }
 
-- (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
+- (void)socketDidDisconnect:(GCDAsyncSocket *)socket withError:(NSError *)err
 {
     
 }
@@ -142,6 +169,16 @@
     
     clientSockets = [NSMutableArray array];
     retries = 3;
+    
+    YKRPacket * ack = [[YKRPacket alloc] initWithDictionary:nil
+                                                       type:YKRPacketTypeAcknowledge
+                                                   andFlags:YKRPacketFlagsNone];
+    NSError * maybeError;
+    ackData = [ack encodeReturningError:&maybeError];
+    if (maybeError) {
+        NSLog(@"Unable to create ACK packet data. Couldn't create server.");
+        return nil;
+    }
     
     return self;
 }

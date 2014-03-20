@@ -563,6 +563,10 @@
 				GCC_PREFIX_HEADER = "src/Yookr-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/res/Yookr-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
@@ -578,6 +582,10 @@
 				GCC_PREFIX_HEADER = "src/Yookr-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/res/Yookr-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/lib",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
