@@ -8,8 +8,9 @@
 
 #import "YKRScene.h"
 
+
 @implementation YKRScene
-@synthesize viewController;
+@synthesize parentViewController;
 
 - (UIInterfaceOrientationMask)sceneOrientation
 {

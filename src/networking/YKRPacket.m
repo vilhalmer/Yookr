@@ -13,52 +13,13 @@ UInt32 MAGIC = htonl(0x444c4447);
 
 
 @implementation YKRPacket
-@synthesize dictionary, type, flags;
+@synthesize encodedData, dictionary, type, flags, payloadLength;
 
-#pragma mark - Plumbing
-
-- (NSData *)encodeReturningError:(NSError * __autoreleasing *)maybeError
-{
-    NSMutableData * packet = [NSMutableData data];
-    
-    NSData * payloadJSONData;
-    if ([self dictionary] && [[self dictionary] count] > 0) {
-        BOOL debugMode = [[[NSUserDefaults standardUserDefaults] objectForKey:@"JSONDebugEnabled"] boolValue];
-        
-        NSError * __autoreleasing payloadError;
-        payloadJSONData = [NSJSONSerialization dataWithJSONObject:dictionary
-                                                          options:((debugMode) ? NSJSONWritingPrettyPrinted : 0)
-                                                            error:&payloadError];
-        
-        if (payloadError) {
-            *maybeError = [NSError errorWithDomain:@"YKRPacketErrorDomain"
-                                              code:4
-                                          userInfo:@{@"NSLocalizedDescriptionKey" : @"Payload encoding error"}];
-        }
-    }
-    
-    if (maybeError) return nil;
-    
-    //UInt32 packetNumber = htonl(0);
-    Byte packetType = [self type] | ([self flags] << 4);
-    UInt32 payloadLength = htonl((UInt32)[payloadJSONData length]);
-    
-    [packet appendBytes:&MAGIC length:sizeof(MAGIC)];
-    [packet appendBytes:&packetType length:sizeof(packetType)];
-    [packet appendBytes:&payloadLength length:sizeof(payloadLength)];
-    if (payloadJSONData) {
-        [packet appendData:payloadJSONData]; // Attach -dictionary encoded as JSON.
-    }
-    
-    return packet;
-}
-
-- (id)initWithEncodedData:(NSData *)someData returningError:(NSError * __autoreleasing *)maybeError
+- (id)initWithHeader:(NSData *)someData returningError:(NSError * __autoreleasing *)maybeError
 {
     UInt32 packetMagic = 0;
     Byte packetType = 0;
     UInt32 packetLength = 0;
-    NSData * payload;
     
     NSInteger loc = 0;
     
@@ -79,19 +40,78 @@ UInt32 MAGIC = htonl(0x444c4447);
     
     [someData getBytes:&packetLength range:NSMakeRange(loc, sizeof(packetLength))];
     packetLength = ntohl(packetLength);
-    loc += sizeof(packetLength);
+    //loc += sizeof(packetLength);
     
-    payload = [someData subdataWithRange:NSMakeRange(loc, [someData length] - loc)];
+    payloadLength = @(packetLength);
     
-    if (![NSJSONSerialization isValidJSONObject:payload]) {
-        *maybeError = [NSError errorWithDomain:@"YKRPacketErrorDomain"
-                                          code:2
-                                      userInfo:@{@"NSLocalizedDescriptionKey" : @"Invalid payload data"}];
+    return self;
+}
+
+- (id)initWithDictionary:(NSDictionary *)aDictionary
+                    type:(YKRPacketType)aType
+                andFlags:(YKRPacketFlags)someFlags
+          returningError:(NSError * __autoreleasing *)maybeError
+{
+    if (!(self = [super init])) return nil;
+    
+    dictionary = aDictionary;
+    type = aType;
+    flags = someFlags;
+    NSLog(@"%d", type);
+    
+    // Now encode the packet:
+    NSMutableData * packetData = [NSMutableData data];
+    
+    NSData * payloadJSONData;
+    if ([self dictionary] && [[self dictionary] count] > 0) {
+        BOOL debugMode = [[[NSUserDefaults standardUserDefaults] objectForKey:@"JSONDebugEnabled"] boolValue];
+        
+        NSError * __autoreleasing payloadError;
+        payloadJSONData = [NSJSONSerialization dataWithJSONObject:dictionary
+                                                          options:((debugMode) ? NSJSONWritingPrettyPrinted : 0)
+                                                            error:&payloadError];
+        
+        if (payloadError) {
+            *maybeError = [NSError errorWithDomain:@"YKRPacketErrorDomain"
+                                              code:4
+                                          userInfo:@{@"NSLocalizedDescriptionKey" : @"Payload encoding error"}];
+        }
+    }
+    
+    if (*maybeError) {
+        NSLog(@"packet failed: %@", *maybeError);
         return nil;
     }
     
+    Byte packetType = [self type] | ([self flags] << 4);
+    UInt32 payloadDataLength = htonl((UInt32)[payloadJSONData length]);
+    
+    [packetData appendBytes:&MAGIC length:sizeof(MAGIC)];
+    [packetData appendBytes:&packetType length:sizeof(packetType)];
+    [packetData appendBytes:&payloadDataLength length:sizeof(payloadDataLength)];
+    if (payloadJSONData) {
+        [packetData appendData:payloadJSONData]; // Attach -dictionary encoded as JSON.
+    }
+    
+    NSLog(@"packetdata = %@", packetData);
+    
+    encodedData = packetData;
+    payloadLength = @(payloadDataLength);
+    
+    return self;
+}
+
+- (void)setPayload:(NSData *)payloadData returningError:(NSError * __autoreleasing *)maybeError
+{
+    if ([self type] != YKRPacketTypeJSON) {
+        *maybeError = [NSError errorWithDomain:@"YKRPacketErrorDomain"
+                                          code:5
+                                      userInfo:@{@"NSLocalizedDescriptionKey" : @"Non-JSON packet cannot have payload."}];
+        return;
+    }
+    
     NSError * payloadError;
-    dictionary = [NSJSONSerialization JSONObjectWithData:payload
+    dictionary = [NSJSONSerialization JSONObjectWithData:payloadData
                                                  options:0
                                                    error:&payloadError];
     
@@ -100,22 +120,15 @@ UInt32 MAGIC = htonl(0x444c4447);
                                           code:3
                                       userInfo:@{@"NSLocalizedDescriptionKey" : @"JSON decoding failure",
                                                  @"NSUnderlyingErrorKey"      : payloadError}];
-        return nil;
+        return;
     }
     
-    return self;
+    NSMutableData * completeData = [encodedData mutableCopy];
+    [completeData appendData:payloadData];
+    encodedData = [completeData copy];
 }
 
-- (id)initWithDictionary:(NSDictionary *)aDictionary type:(YKRPacketType)aType andFlags:(YKRPacketFlags)someFlags
-{
-    if (!(self = [super init])) return nil;
-    
-    dictionary = aDictionary;
-    type = aType;
-    flags = someFlags;
-    
-    return self;
-}
+#pragma mark - Plumbing
 
 - (id)init
 {
@@ -124,8 +137,8 @@ UInt32 MAGIC = htonl(0x444c4447);
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"{ type: %2x, action: %2x, dictionary: %@ }",
-            [self type], [self flags], [self dictionary]];
+    return [NSString stringWithFormat:@"{ type: %2x, flags: %2x, length: %ld, dictionary: %@ }",
+            [self type], [self flags], [[self payloadLength] integerValue], [self dictionary]];
 }
 
 #pragma mark - Object subscripting

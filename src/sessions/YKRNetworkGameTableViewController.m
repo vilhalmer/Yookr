@@ -7,10 +7,43 @@
 //
 
 #import "YKRNetworkGameTableViewController.h"
+#import "YKRClient.h"
+#import "YKRAppDelegate.h"
+#import "YKRLobbyTableViewController.h"
+
 
 @implementation YKRNetworkGameTableViewController
 {
-    // YKRGame * game;
+    YKRClient * client;
+}
+@synthesize session;
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"networkGameTableViewController session = %@", [self session]);
+    client = [[YKRClient alloc] initWithSession:[self session]];
+    [client connect];
+    YKRRemoteGame * remoteGame = [YKRRemoteGame new];
+    [remoteGame setRemoteDelegate:client];
+    [remoteGame setGameSize:[[[self session] gameSize] integerValue]];
+    [client setGame:remoteGame];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    /// @todo: Stop hacking around the preview lobby.
+    if ([self isMovingToParentViewController]) {
+        [self performSegueWithIdentifier:@"segueToLobbyTableViewController" sender:nil];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"segueToLobbyTableViewController"]) {
+        NSLog(@"setting lobby delegate n' stuff");
+        [(YKRAppDelegate *)[[UIApplication sharedApplication] delegate] setNetworkController:client];
+        [(YKRLobbyTableViewController *)[(UINavigationController *)[segue destinationViewController] topViewController] setDelegate:client];
+    }
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -28,7 +61,6 @@
 {
     if ([indexPath section] == 1 && [indexPath row] == 0) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        // Now launch the lobby view.
     }
 }
 
@@ -43,24 +75,8 @@
                                           reuseIdentifier:@"networkGamePlayerTableViewCell"];
         }
         
-        NSString * playerName;
-        switch ([indexPath row]) {
-            case 0:
-                playerName = @"Rose Lalonde";
-                break;
-            case 1:
-                playerName = @"Dave Strider";
-                break;
-            case 2:
-                playerName = @"Jade Harley";
-                break;
-            case 3:
-                playerName = @"John Egbert";
-                break;
-            default:
-                playerName = @"Karkat Vantas"; // WHY THE FUCK AM I THE DEFAULT
-                break;
-        }
+        NSString * playerName = [[[client game] players] objectAtIndex:[indexPath row]];
+        
         [[cell textLabel] setText:[NSString stringWithFormat:@"Player %ld", [indexPath row] + 1]];
         [[cell detailTextLabel] setText:playerName];
     }
@@ -96,7 +112,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 4;
+        // If we have a fixed game size, we want to create "waiting" cells. If not, just show current players.
+        if ([[client game] gameSize] > 0) {
+            return [[client game] gameSize];
+        }
+        else {
+            NSLog(@"probably here?");
+            return [[client game] playerCount];
+        }
     }
     else {
         return 1;

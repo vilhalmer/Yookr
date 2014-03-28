@@ -10,13 +10,12 @@
 
 @interface YKRSession : NSObject
 
-@property (readonly) NSString * ip;
+@property (readonly) NSData * sockaddr;
 @property (readonly) NSString * gameType;
 @property (readonly) NSString * name;
 @property (readonly) NSString * hostUser;
 @property (readonly) NSNumber * playerCount;
-
-- (NSArray *)playerNames;
+@property (readonly) NSNumber * gameSize;
 
 #pragma mark - Plumbing
 

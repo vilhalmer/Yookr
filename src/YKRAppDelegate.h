@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YKRNetworking.h"
+
 
 @interface YKRAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIWindow * window;
+@property (readwrite, strong) id<YKRNetworking> networkController;
 
 @end

@@ -9,11 +9,21 @@
 #import "YKRPlayer.h"
 #import "GCDAsyncSocket.h"
 
+@protocol YKRRemotePlayerDelegate;
+
 
 @interface YKRRemotePlayer : YKRPlayer
 
 @property (readonly) GCDAsyncSocket * socket;
+@property (readwrite, weak) id<YKRRemotePlayerDelegate> remoteDelegate;
 
-- (id)initWithName:(NSString *)aName andSocket:(GCDAsyncSocket *)aSocket;
+- (instancetype)initWithName:(NSString *)aName andSocket:(GCDAsyncSocket *)aSocket;
+
+@end
+
+
+@protocol YKRRemotePlayerDelegate <NSObject>
+
+- (void)updateProperties:(NSDictionary *)someProperties ofRemotePlayer:(YKRRemotePlayer *)aPlayer;
 
 @end

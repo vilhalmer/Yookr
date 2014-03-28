@@ -8,21 +8,30 @@
 
 #import "YKRGameManager.h"
 #import "YKREuchreGame.h"
+#import "YKREuchreGameScene.h"
+#import "YKRWarGame.h"
+#import "YKRWarGameScene.h"
 
 
 @implementation YKRGameManager
 {
-    NSMutableDictionary * gameClassesByName;
+    NSMutableDictionary * gameClassesByGameType;
+    NSMutableDictionary * gameSceneClassesByGameType;
 }
 
 - (YKRGame *)gameOfType:(NSString *)aTypeName
 {
-    return [[gameClassesByName objectForKey:aTypeName] new];
+    return [[gameClassesByGameType objectForKey:aTypeName] new];
+}
+
+- (YKRGameScene *)sceneForGameType:(NSString *)aGameType
+{
+    return [[gameSceneClassesByGameType objectForKey:aGameType] new];
 }
 
 - (NSArray *)gameTypes
 {
-    return [gameClassesByName allKeys];
+    return [gameClassesByGameType allKeys];
 }
 
 #pragma mark - Plumbing
@@ -31,11 +40,16 @@
 {
     if (!(self = [super init])) return nil;
     
-    gameClassesByName = [NSMutableDictionary dictionary];
+    gameClassesByGameType = [NSMutableDictionary dictionary];
+    gameSceneClassesByGameType = [NSMutableDictionary dictionary];
     
     // Let's grab all of the game classes that we want to make accessible:
-    [gameClassesByName setObject:[YKREuchreGame class] forKey:[YKREuchreGame typeName]];
-    
+    [gameClassesByGameType setObject:[YKREuchreGame class] forKey:[[YKREuchreGame class] typeName]];
+    [gameSceneClassesByGameType setObject:[YKREuchreGameScene class] forKey:[[YKREuchreGame class] typeName]];
+    /*
+    [gameClassesByGameType setObject:[YKRWarGame class] forKey:[[YKRWarGame class] typeName]];
+    [gameSceneClassesByGameType setObject:[YKRWarGameScene class] forKey:[[YKRWarGame class] typeName]];
+    */
     return self;
 }
 

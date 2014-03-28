@@ -9,15 +9,19 @@
 #import "YKRAppDelegate.h"
 
 @implementation YKRAppDelegate
+@synthesize networkController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{/*
+{   /*
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"PreviouslyLaunched"])
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"PreviouslyLaunched"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    */
+     */
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@"Dr. Horrible" forKey:@"username"];
+    
     return YES;
 }
 							

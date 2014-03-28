@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "YKRGame.h"
+#import "YKRGameScene.h"
 
 
 @interface YKRGameManager : NSObject
 
 - (YKRGame *)gameOfType:(NSString *)aTypeName;
+- (YKRGameScene *)sceneForGameType:(NSString *)aGameType;
 - (NSArray *)gameTypes;
 
 #pragma mark - Plumbing

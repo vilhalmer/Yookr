@@ -7,34 +7,54 @@
 //
 
 #import "YKRPlayer.h"
+#import "NSDictionary+Integrate.h"
 
 
 @implementation YKRPlayer
 {
-    NSMutableArray * hand;
+    NSDictionary * properties;
 }
 @synthesize name;
 
-- (NSArray *)hand
+- (id)propertyForKey:(NSString *)key
 {
-    return [hand copy];
+    return [properties objectForKey:key];
+}
+
+- (void)updateProperties:(NSDictionary *)someProperties
+{
+    properties = [properties dictionaryByIntegratingDictionary:someProperties];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"YKRPlayer_updatedProperties" object:self];
 }
 
 #pragma mark - Plumbing
 
-- (id)initWithName:(NSString *)aName
+- (instancetype)initWithName:(NSString *)aName
 {
     if (!(self = [super init])) return nil;
     
     name = aName;
-    hand = [NSMutableArray array];
+    properties = [NSMutableDictionary dictionary];
     
     return self;
 }
 
-- (id)init
+- (instancetype)init
 {
     @throw [NSException exceptionWithName:@"NOPE" reason:@"NOPE" userInfo:nil];
+}
+
+#pragma mark - Keyed subscripting methods
+
+- (id)objectForKeyedSubscript:(id<NSCopying>)key
+{
+    if (![[(NSObject *)key class] isKindOfClass:[NSString class]]) {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException
+                                       reason:@"Key on Player must be an NSString."
+                                     userInfo:nil];
+    }
+    
+    return [self propertyForKey:(NSString *)key];
 }
 
 @end

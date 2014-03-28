@@ -9,6 +9,7 @@
 #import "YKRMainMenuScene.h"
 #import "YKRSceneButton.h"
 
+
 @implementation YKRMainMenuScene
 {
     YKRSceneButton * playButton;
@@ -49,7 +50,7 @@
 
 - (void)displaySessions
 {
-    [[self viewController] performSegueWithIdentifier:@"segueToSessionTableViewController" sender:nil];
+    [[self parentViewController] performSegueWithIdentifier:@"segueToSessionTableViewController" sender:nil];
 }
 
 - (void)update:(CFTimeInterval)currentTime

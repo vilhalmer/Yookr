@@ -50,7 +50,6 @@
 
 - (void)netServiceBrowserWillSearch:(NSNetServiceBrowser *)aNetServiceBrowser
 {
-    NSLog(@"commencing to be look for thing");
     searching = YES;
 }
 
@@ -64,7 +63,6 @@
            didFindService:(NSNetService *)netService
                moreComing:(BOOL)moreServicesComing
 {
-    NSLog(@"found %@", netService);
     [resolvingSessions addObject:netService];
     [netService setDelegate:self];
     [netService resolveWithTimeout:5.0];
@@ -74,7 +72,6 @@
          didRemoveService:(NSNetService *)netService
                moreComing:(BOOL)moreServicesComing
 {
-    NSLog(@"remove");
 	for (YKRSession * aSession in availableSessions) {
         /// @todo: This is extremely inefficient.
         if ([aSession isEqualToService:netService]) {
@@ -87,19 +84,16 @@
 
 - (void)netServiceBrowserDidStopSearch:(NSNetServiceBrowser *)sender
 {
-	NSLog(@"search ended");
     searching = NO;
 }
 
 - (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict
 {
-	NSLog(@"couldn't resolve, server is probably dead");
     [resolvingSessions removeObject:sender];
 }
 
 - (void)netServiceDidResolveAddress:(NSNetService *)sender
 {
-    NSLog(@"resolved %@", sender);
     [resolvingSessions removeObject:sender];
     
     YKRSession * newSession = [[YKRSession alloc] initWithService:sender];

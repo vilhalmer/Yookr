@@ -7,13 +7,25 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "YKRGameScene.h"
+
+@protocol YKRPlayerDelegate;
 
 
 @interface YKRPlayer : NSObject
 
 @property (readonly) NSString * name;
-- (NSArray *)hand;
+@property (readwrite, weak) YKRGameScene * scene;
 
-- (id)initWithName:(NSString *)aName;
+- (id)propertyForKey:(NSString *)key;
+- (void)updateProperties:(NSDictionary *)someProperties;
+
+#pragma mark - Plumbing
+
+- (instancetype)initWithName:(NSString *)aName;
+
+#pragma mark - Keyed subscripting methods
+
+- (id)objectForKeyedSubscript:(id<NSCopying>)key;
 
 @end

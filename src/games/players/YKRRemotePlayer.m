@@ -8,10 +8,19 @@
 
 #import "YKRRemotePlayer.h"
 
-@implementation YKRRemotePlayer
-@synthesize socket;
 
-- (id)initWithName:(NSString *)aName andSocket:(GCDAsyncSocket *)aSocket
+@implementation YKRRemotePlayer
+@synthesize socket, remoteDelegate;
+
+- (void)updateProperties:(NSDictionary *)someProperties
+{
+    [super updateProperties:someProperties];
+    [[self remoteDelegate] updateProperties:someProperties ofRemotePlayer:self];
+}
+
+#pragma mark - Plumbing
+
+- (instancetype)initWithName:(NSString *)aName andSocket:(GCDAsyncSocket *)aSocket
 {
     if (!(self = [super initWithName:aName])) return nil;
     

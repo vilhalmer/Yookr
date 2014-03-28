@@ -9,6 +9,7 @@
 #import "YKRSessionTableViewController.h"
 #import "YKRSessionManager.h"
 #import "YKRGameManager.h"
+#import "YKRNetworkGameTableViewController.h"
 
 
 @implementation YKRSessionTableViewController
@@ -25,8 +26,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"segueToNetworkGameViewController"]) {
-        // Pass network game object to controller for display.
+    if ([[segue identifier] isEqualToString:@"segueToNetworkGameTableViewController"]) {
+        NSIndexPath * indexPath = [[self tableView] indexPathForCell:sender];
+        YKRSession * selectedSession = [[[YKRSessionManager sharedSessionManager] availableSessionsOfType:[[YKRGameManager sharedManager] gameTypes][[indexPath section] - 1]] objectAtIndex:[indexPath row]];
+        [(YKRNetworkGameTableViewController *)[segue destinationViewController] setSession:selectedSession];
     }
 }
 
@@ -50,6 +53,13 @@
     [[self tableView] reloadData];
 }
 
+#pragma mark - UITableViewDelegate methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
 #pragma mark - UITableViewDataSource methods
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -70,9 +80,18 @@
                                           reuseIdentifier:@"networkGameTableViewCell"];
         }
         
-        YKRSession * session = [[[YKRSessionManager sharedSessionManager] availableSessions] objectAtIndex:[indexPath row]];
+        /// @todo: Holy shit please fix this
+        YKRSession * session = [[[YKRSessionManager sharedSessionManager] availableSessionsOfType:[[YKRGameManager sharedManager] gameTypes][[indexPath section] - 1]] objectAtIndex:[indexPath row]];
         [[cell textLabel] setText:[session name]];
-        [[cell detailTextLabel] setText:[NSString stringWithFormat:@"%ld/4 players", [[session playerCount] integerValue]]];
+        NSString * playerCountString;
+        if ([[session gameSize] integerValue] > 0) {
+            playerCountString = [NSString stringWithFormat:@"%ld/%ld players", [[session playerCount] integerValue], [[session gameSize] integerValue]];
+        }
+        else {
+            playerCountString = [NSString stringWithFormat:@"%ld players", [[session playerCount] integerValue]];
+        }
+        
+        [[cell detailTextLabel] setText:playerCountString];
     }
     
     return cell;

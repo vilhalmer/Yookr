@@ -11,27 +11,35 @@
 #import "YKRRemotePlayer.h"
 
 
-NSUInteger tag_read = 'READ';
-NSUInteger tag_writeAcknowledge = 'ACKN';
+static NSUInteger tag_writeHello   = 1;
+static NSUInteger tag_writeGoodbye = 2;
+static NSUInteger tag_writeJSON    = 3;
 
-NSUInteger timeout_write = 500;
+static NSUInteger tag_readHeader  = 8;
+static NSUInteger tag_readPayload = 9;
+
+static NSInteger read_timeout  = -1;
+static NSInteger write_timeout = -1;
 
 @implementation YKRServer
 {
     GCDAsyncSocket * serverSocket;
+    dispatch_queue_t socketQueue;
     NSMutableArray * clientSockets;
     NSNetService * service;
     
-    NSData * ackData;
+    NSMapTable * currentPackets;
+    NSMapTable * previousPackets;
     
     NSInteger retries;
     
-    YKRGame * __weak game;
+    YKRGame * game;
 }
 
 - (BOOL)startServerWithGame:(YKRGame *)aGame error:(NSError * __autoreleasing *)maybeError
 {
     game = aGame;
+    [game setDelegate:self];
     
     // Set up the socket:
     serverSocket = [[GCDAsyncSocket alloc] initWithDelegate:self
@@ -39,69 +47,106 @@ NSUInteger timeout_write = 500;
     [serverSocket acceptOnPort:0 error:maybeError];
     if (maybeError) return NO;
     
-    // Broadcast the server's availability:
-    service = [[NSNetService alloc] initWithDomain:@"local."
-                                              type:@"_DigitalDeck._tcp."
-                                              name:[[NSUserDefaults standardUserDefaults] objectForKey:@"serviceName"]
-                                              port:[serverSocket localPort]];
-    [service setDelegate:self];
-    [service publish];
+    [self startBroadcasting];
     
     return YES;
 }
 
 - (void)stopServer
+/// @todo: Clean up, send GOODBYE to all clients.
 {
-    [service stop];
-    service = nil;
+    [self stopBroadcasting];
     [serverSocket disconnect];
     serverSocket = nil;
 }
 
-#pragma mark - GCDAsyncSocket delegate methods
-
-- (dispatch_queue_t)newSocketQueueForConnectionFromAddress:(NSData *)address onSocket:(GCDAsyncSocket *)sock
+- (void)startBroadcasting
+/// Broadcasts the server's availability using Bonjour.
 {
-    return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    if (service) return;
+    
+    service = [[NSNetService alloc] initWithDomain:@"local."
+                                              type:@"_DigitalDeck._tcp."
+                                              name:nil
+                                              port:[serverSocket localPort]];
+    
+    NSDictionary * txtRecord = @{ @"hostUser"    : [[NSUserDefaults standardUserDefaults] objectForKey:@"username"],
+                                  @"gameType"    : [[game class] typeName],
+                                  @"playerCount" : @([game playerCount]),
+                                  @"gameSize"    : @([game gameSize])
+                                };
+    [service setTXTRecordData:[NSNetService dataFromTXTRecordDictionary:txtRecord]];
+    [service setDelegate:self];
+    [service publish];
 }
 
-- (void)socket:(GCDAsyncSocket *)aSocket didAcceptNewSocket:(GCDAsyncSocket *)newSocket
-/// This is where we initially process clients as they attach. The rest is in socket:didReadData:port:.
+- (void)stopBroadcasting
+/// Ends the availability broadcast.
+{
+    if (service) {
+        [service stop];
+        service = nil;
+    }
+}
+
+#pragma mark - GCDAsyncSocket delegate methods
+
+- (dispatch_queue_t)newSocketQueueForConnectionFromAddress:(NSData *)address onSocket:(GCDAsyncSocket *)socket
+{
+    if (!socketQueue) {
+        socketQueue = dispatch_queue_create("co.unsquared.Yookr.serverSocketQueue", DISPATCH_QUEUE_SERIAL);
+    }
+    
+    return socketQueue;
+}
+
+- (void)socket:(GCDAsyncSocket *)socket didAcceptNewSocket:(GCDAsyncSocket *)newSocket
+/// This is where we initially process clients as they attach. The rest is in socket:didReadData:withTag:.
 {
     NSLog(@"Accepted New Socket from %@:%hu", [newSocket connectedHost], [newSocket connectedPort]);
     [clientSockets addObject:newSocket];
-    [newSocket readDataToLength:(17 * sizeof(Byte)) withTimeout:5.0 tag:tag_read];
-}
-
-- (void)socket:(GCDAsyncSocket *)socket didConnectToHost:(NSString *)host port:(uint16_t)port
-{
-    
+    [newSocket readDataToLength:(packet_length * sizeof(Byte)) withTimeout:read_timeout tag:tag_readHeader];
 }
 
 - (void)socket:(GCDAsyncSocket *)socket didReadData:(NSData *)data withTag:(long)tag
 {
-    NSError * maybeError;
-    YKRPacket * packet = [[YKRPacket alloc] initWithEncodedData:data returningError:&maybeError];
+    NSError * __autoreleasing maybeError;
+    YKRPacket * currentPacket = [currentPackets objectForKey:socket];
     
-    if (maybeError) {
-        NSLog(@"Received a broken packet!");
-        NSLog(@"%@", maybeError);
-        return;
+    if (tag == tag_readHeader) {
+        [previousPackets setObject:currentPacket forKey:socket];
+        currentPacket = [[YKRPacket alloc] initWithHeader:data returningError:&maybeError];
+        [currentPackets setObject:currentPacket forKey:socket];
+        
+        if (maybeError) {
+            NSLog(@"Received a broken packet!");
+            NSLog(@"%@", maybeError);
+            return;
+        }
+        
+        if ([currentPacket type] == YKRPacketTypeJSON) {
+            /// @todo: I am going to hell for this control flow.
+            [socket readDataToLength:[[currentPacket payloadLength] integerValue]
+                         withTimeout:read_timeout
+                                 tag:tag_readPayload];
+            return;
+        }
+    }
+    else if (tag == tag_readPayload) {
+        [currentPacket setPayload:data returningError:&maybeError];
+        if (maybeError) {
+            NSLog(@"Something went wrong setting the payload of the Packet.");
+            NSLog(@"%@", maybeError);
+            return;
+        }
+        
+        // So we now have a complete packet object, and can play with the messages inside!
+        NSLog(@"%@", currentPacket);
+        [game performAction:[currentPacket dictionary]];
+        
     }
     
-    // Go ahead and acknowledge that we've received the packet:
-    [socket writeData:ackData withTimeout:timeout_write tag:tag_writeAcknowledge];
-    
-    if ([packet type] == YKRPacketTypeHello) {
-        NSLog(@"HELLO from %@", [socket connectedHost]);
-    }
-    if ([packet type] == YKRPacketTypeJSON) {
-        NSLog(@"%@", packet);
-    }
-    if ([packet type] == YKRPacketTypeGoodbye) {
-        NSLog(@"GOODBYE from %@", [socket connectedHost]);
-        [clientSockets removeObject:socket];
-    }
+    [socket readDataToLength:(packet_length * sizeof(Byte)) withTimeout:read_timeout tag:tag_readHeader];
 }
 
 - (void)socket:(GCDAsyncSocket *)socket didReadPartialDataOfLength:(NSUInteger)partialLength tag:(long)tag
@@ -133,17 +178,7 @@ NSUInteger timeout_write = 500;
     return 0;
 }
 
-- (void)socketDidCloseReadStream:(GCDAsyncSocket *)sock
-{
-    
-}
-
 - (void)socketDidDisconnect:(GCDAsyncSocket *)socket withError:(NSError *)err
-{
-    
-}
-
-- (void)socketDidSecure:(GCDAsyncSocket *)sock
 {
     
 }
@@ -161,6 +196,101 @@ NSUInteger timeout_write = 500;
     NSLog(@"%@", errorDict);
 }
 
+#pragma mark - Networking methods
+
+- (YKRGame *)game
+{
+    return game;
+}
+
+- (BOOL)isHostingGame
+{
+    return YES;
+}
+
+#pragma mark - Game delegate methods
+
+- (void)game:(YKRGame *)aGame didUpdateProperties:(NSDictionary *)someProperties
+{
+    NSDictionary * payload = @{ @"target"     : @"game",
+                                @"properties" : someProperties };
+    
+    NSError * maybeError;
+    YKRPacket * packet = [[YKRPacket alloc] initWithDictionary:payload
+                                                          type:YKRPacketTypeJSON
+                                                      andFlags:YKRPacketFlagsNone
+                                                returningError:&maybeError];
+    
+    if (maybeError) {
+        NSLog(@"%@", maybeError);
+        return;
+    }
+    
+    // Send the updated game properties to all clients:
+    for (GCDAsyncSocket * clientSocket in clientSockets) {
+        [clientSocket writeData:[packet encodedData] withTimeout:write_timeout tag:tag_writeJSON];
+    }
+}
+
+- (void)game:(YKRGame *)aGame addedPlayer:(YKRPlayer *)aPlayer
+{
+    NSDictionary * payload = @{ @"target" : @"game",
+                                @"addPlayer" : [aPlayer name]};
+    
+    NSError * maybeError;
+    YKRPacket * packet = [[YKRPacket alloc] initWithDictionary:payload
+                                                          type:YKRPacketTypeJSON
+                                                      andFlags:YKRPacketFlagsNone
+                                                returningError:&maybeError];
+    
+    for (GCDAsyncSocket * clientSocket in clientSockets) {
+        [clientSocket writeData:[packet encodedData] withTimeout:write_timeout tag:tag_writeJSON];
+    }
+}
+
+- (void)game:(YKRGame *)aGame removedPlayer:(YKRPlayer *)aPlayer
+{
+    NSDictionary * payload = @{ @"target" : @"game",
+                                @"removePlayer" : [aPlayer name]};
+    
+    NSError * maybeError;
+    YKRPacket * packet = [[YKRPacket alloc] initWithDictionary:payload
+                                                          type:YKRPacketTypeJSON
+                                                      andFlags:YKRPacketFlagsNone
+                                                returningError:&maybeError];
+    
+    for (GCDAsyncSocket * clientSocket in clientSockets) {
+        [clientSocket writeData:[packet encodedData] withTimeout:write_timeout tag:tag_writeJSON];
+    }
+}
+
+#pragma mark - Remote player delegate methods
+
+- (void)updateProperties:(NSDictionary *)someProperties ofRemotePlayer:(YKRRemotePlayer *)aPlayer
+{
+    NSDictionary * payload = @{ @"target"     : @"player",
+                                @"properties" : someProperties };
+    
+    NSError * maybeError;
+    YKRPacket * packet = [[YKRPacket alloc] initWithDictionary:payload
+                                                          type:YKRPacketTypeJSON
+                                                      andFlags:YKRPacketFlagsNone
+                                                returningError:&maybeError];
+    
+    if (maybeError) {
+        NSLog(@"%@", maybeError);
+        return;
+    }
+    
+    /// @todo: Pull this out of the shipping version.
+    if (![clientSockets containsObject:[aPlayer socket]]) {
+        NSLog(@"GHOST SOCKET LOL AAAAAAAA");
+        return;
+    }
+    
+    [[aPlayer socket] writeData:[packet encodedData] withTimeout:write_timeout tag:tag_writeJSON];
+}
+
 #pragma mark - Plumbing
 
 - (id)init
@@ -169,16 +299,8 @@ NSUInteger timeout_write = 500;
     
     clientSockets = [NSMutableArray array];
     retries = 3;
-    
-    YKRPacket * ack = [[YKRPacket alloc] initWithDictionary:nil
-                                                       type:YKRPacketTypeAcknowledge
-                                                   andFlags:YKRPacketFlagsNone];
-    NSError * maybeError;
-    ackData = [ack encodeReturningError:&maybeError];
-    if (maybeError) {
-        NSLog(@"Unable to create ACK packet data. Couldn't create server.");
-        return nil;
-    }
+    currentPackets = [NSMapTable weakToStrongObjectsMapTable];
+    previousPackets = [NSMapTable weakToStrongObjectsMapTable];
     
     return self;
 }

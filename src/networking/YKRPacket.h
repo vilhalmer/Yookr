@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 
+static NSUInteger packet_length = 9;
+
 typedef NS_ENUM(Byte, YKRPacketType) {
     YKRPacketTypeNone        = 0x00,
     YKRPacketTypeHello       = 0x01,
@@ -24,11 +26,15 @@ typedef NS_ENUM(short, YKRPacketFlags) {
 
 @interface YKRPacket : NSObject
 
+@property (readonly) NSData * encodedData;
 @property (readonly) NSDictionary * dictionary;
 @property (readonly) YKRPacketType type;
 @property (readonly) YKRPacketFlags flags;
+@property (readonly) NSNumber * payloadLength;
 
-- (NSData *)encodeReturningError:(NSError * __autoreleasing *)maybeError;
+- (void)setPayload:(NSData *)payloadData returningError:(NSError * __autoreleasing *)maybeError;
+/** Call this after receiving the payload of a Packet that was created with -initWithHeader:… 
+ ** on such a Packet, -dictionary is nil until this is set. **/
 
 #pragma mark - Object subscripting
 
@@ -36,7 +42,10 @@ typedef NS_ENUM(short, YKRPacketFlags) {
 
 #pragma mark - Plumbing
 
-- (id)initWithDictionary:(NSDictionary *)aDictionary type:(YKRPacketType)aType andFlags:(YKRPacketFlags)someFlags;
-- (id)initWithEncodedData:(NSData *)data returningError:(NSError * __autoreleasing *)maybeError;
+- (id)initWithHeader:(NSData *)data returningError:(NSError * __autoreleasing *)maybeError;
+- (id)initWithDictionary:(NSDictionary *)aDictionary
+                    type:(YKRPacketType)aType
+                andFlags:(YKRPacketFlags)someFlags
+          returningError:(NSError * __autoreleasing *)maybeError;
 
 @end

@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 Unsquared Labs. All rights reserved.
 //
 
+#import <SpriteKit/SpriteKit.h>
 #import "YKRMainViewController.h"
 #import "YKRMainMenuScene.h"
-#import "YKRSessionManager.h"
-#import "YKRSessionTableViewController.h"
+#import "YKRAppDelegate.h"
+#import "YKRGameManager.h"
 
 
 @implementation YKRMainViewController
@@ -22,27 +23,22 @@
     [super viewDidLoad];
 
     // Configure the view.
-    SKView * skView = (SKView *)self.view;
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
-    
-    //[skView setBackgroundColor:];
+    SKView * skView = (SKView *)[self view];
+    [skView setShowsFPS:YES];
+    [skView setShowsNodeCount:YES];
     
     // Create and configure the scene.
-    YKRMainMenuScene * scene = [YKRMainMenuScene sceneWithSize:skView.bounds.size];
-    scene.scaleMode = SKSceneScaleModeAspectFill;
-    [scene setViewController:self];
+    YKRMainMenuScene * scene = [YKRMainMenuScene sceneWithSize:[skView bounds].size];
+    [scene setScaleMode:SKSceneScaleModeAspectFill];
+    [scene setParentViewController:self];
     
     // Present the scene.
     [skView presentScene:scene];
 }
 
 - (void)viewDidAppear:(BOOL)animated
-{/*
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [self performSegueWithIdentifier:@"segueToSessionTableViewController" sender:nil];
-    });*/
+{
+    
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
@@ -75,9 +71,17 @@
     }
 }
 
-- (IBAction)unwindToGameViewControllerFrom:(UIStoryboardSegue *)segue
+- (IBAction)unwindToMainViewControllerFrom:(UIStoryboardSegue *)segue
 {
-    if ([segue sourceViewController]) {}
+    if ([[segue identifier] isEqualToString:@"unwindSegueToMainViewControllerFromLobbyTableViewController"]) {
+        id<YKRNetworking> networking = [(YKRAppDelegate *)[[UIApplication sharedApplication] delegate] networkController];
+        NSString * gameType = [[[networking game] class] typeName];
+        NSLog(@"Presenting game type scene %@", gameType);
+        /// @todo: This is hard coded lol:
+        SKScene * scene = [[YKRGameManager sharedManager] sceneForGameType:@"Euchre"];
+        NSLog(@"scene = %@", scene);
+        [(SKView *)[self view] presentScene:scene];
+    }
 }
 
 @end

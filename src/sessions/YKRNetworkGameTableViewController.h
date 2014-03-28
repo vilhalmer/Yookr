@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YKRSession.h"
+
 
 @interface YKRNetworkGameTableViewController : UITableViewController
+
+@property (readwrite, strong) YKRSession * session;
 
 @end
